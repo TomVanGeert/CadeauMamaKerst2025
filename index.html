@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,19 @@
     <style>
         :root {
             /* Festive Christmas Palette */
-            --bg-color: #2c0003; /* Dark festive red/brown background */
+            --bg-color: #2c0003;
+            /* Dark festive red/brown background */
             --bg-gradient: radial-gradient(circle at center, #5e0000 0%, #2c0003 100%);
             --text-color: #f0f4f8;
-            --accent-color: #d4af37; /* Gold */
+            --accent-color: #d4af37;
+            /* Gold */
             --button-color: #c0392b;
             --button-hover: #e74c3c;
             --shutter-color: #1a1a1a;
         }
 
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -47,8 +51,13 @@
         }
 
         @keyframes snowfall {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100vh); }
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(100vh);
+            }
         }
 
         .container {
@@ -61,7 +70,8 @@
         }
 
         /* Screens */
-        #landing-screen, #result-screen {
+        #landing-screen,
+        #result-screen {
             transition: opacity 0.5s ease;
             display: flex;
             flex-direction: column;
@@ -77,7 +87,8 @@
         #result-screen {
             display: none;
             opacity: 0;
-            background: rgba(0,0,0,0.8); /* Darker overlay for result */
+            background: rgba(0, 0, 0, 0.8);
+            /* Darker overlay for result */
         }
 
         /* Typography */
@@ -85,7 +96,7 @@
             font-size: 3rem;
             margin-bottom: 0.5rem;
             color: var(--accent-color);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         p {
@@ -103,7 +114,7 @@
             font-size: 1.5rem;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(212, 175, 55, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
             font-family: inherit;
             position: relative;
@@ -112,7 +123,7 @@
 
         .capture-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 30px rgba(212, 175, 55, 0.6);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(212, 175, 55, 0.6);
         }
 
         .capture-btn:active {
@@ -134,10 +145,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
             justify-content: center;
             align-items: center;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 100;
         }
 
@@ -145,14 +157,25 @@
             font-size: 10rem;
             font-weight: bold;
             color: var(--accent-color);
-            text-shadow: 0 0 20px rgba(255,215,0, 0.8);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
             animation: pulse 1s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Result Image */
@@ -161,14 +184,21 @@
             height: auto;
             border-radius: 15px;
             border: 5px solid var(--accent-color);
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
             margin-bottom: 20px;
             animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Shutter Effect */
@@ -193,12 +223,13 @@
         .shutter-closed .shutter.top {
             transform: translateY(0);
         }
+
         .shutter-closed .shutter.bottom {
             transform: translateY(0);
         }
-
     </style>
 </head>
+
 <body>
 
     <!-- Snowflakes Container -->
@@ -217,7 +248,7 @@
     <div id="landing-screen">
         <div class="container">
             <h1>Prettige Feestdagen!</h1>
-            <p>Jullie cadeau wacht op jullie.<br>Zijn jullie er klaar voor?</p>
+            <p>Jouw cadeau wacht op je.<br>Ben je er klaar voor?</p>
             <button id="capture-btn" class="capture-btn">Open Cadeau 🎁</button>
         </div>
     </div>
@@ -227,7 +258,7 @@
         <div class="container">
             <h1>Verrassing!</h1>
             <img src="gift-reveal.png" alt="Cadeau Onthulling" class="gift-image">
-            <p>Jullie gaan op de foto!<br>Professionele fotoshoot 📸</p>
+            <p>We gaan op de foto!<br>Professionele fotoshoot 📸</p>
         </div>
     </div>
 
@@ -277,7 +308,7 @@
         }
 
         function playShutterSound() {
-             // White noise for shutter sound
+            // White noise for shutter sound
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const bufferSize = audioCtx.sampleRate * 0.1; // 100ms
             const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
@@ -352,4 +383,5 @@
         }
     </script>
 </body>
+
 </html>
