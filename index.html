@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,8 @@
             padding: 0;
         }
 
-        body, html {
+        body,
+        html {
             height: 100%;
             width: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -62,8 +64,9 @@
             border: 8px solid #dcdcdc;
             border-radius: 50%;
             box-shadow:
-                0 0 0 4px #95a5a6, /* Outer metallic ring */
-                0 10px 20px rgba(0,0,0,0.2);
+                0 0 0 4px #95a5a6,
+                /* Outer metallic ring */
+                0 10px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: transform 0.1s, box-shadow 0.1s;
             outline: none;
@@ -77,11 +80,12 @@
             transform: scale(0.95);
             box-shadow:
                 0 0 0 4px #95a5a6,
-                0 5px 10px rgba(0,0,0,0.2);
+                0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
         .shutter-btn span {
-            display: none; /* Text hidden visually inside button for design, can be tooltip or below */
+            display: none;
+            /* Text hidden visually inside button for design, can be tooltip or below */
         }
 
         .btn-label {
@@ -124,6 +128,7 @@
         .shutter-closed .shutter-top {
             transform: translateY(0);
         }
+
         .shutter-closed .shutter-bottom {
             transform: translateY(0);
         }
@@ -135,15 +140,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            display: none; /* Hidden initially */
+            display: none;
+            /* Hidden initially */
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
             color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             z-index: 5;
-            overflow-y: auto; /* Allow scroll if content is long */
+            overflow-y: auto;
+            /* Allow scroll if content is long */
         }
 
         /* Bokeh Background */
@@ -166,15 +173,61 @@
         }
 
         /* Warm/Christmas colors */
-        .c1 { width: 150px; height: 150px; top: 10%; left: 20%; background: radial-gradient(circle, rgba(255,215,0,0.5), transparent); animation-duration: 8s; }
-        .c2 { width: 200px; height: 200px; top: 60%; left: 70%; background: radial-gradient(circle, rgba(255,0,0,0.3), transparent); animation-duration: 12s; }
-        .c3 { width: 100px; height: 100px; top: 40%; left: 40%; background: radial-gradient(circle, rgba(255,255,255,0.4), transparent); animation-duration: 6s; }
-        .c4 { width: 120px; height: 120px; top: 80%; left: 10%; background: radial-gradient(circle, rgba(255,223,186,0.4), transparent); animation-duration: 9s; }
-        .c5 { width: 180px; height: 180px; top: 20%; left: 80%; background: radial-gradient(circle, rgba(212,175,55,0.4), transparent); animation-duration: 11s; }
+        .c1 {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 20%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.5), transparent);
+            animation-duration: 8s;
+        }
+
+        .c2 {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            left: 70%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.3), transparent);
+            animation-duration: 12s;
+        }
+
+        .c3 {
+            width: 100px;
+            height: 100px;
+            top: 40%;
+            left: 40%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+            animation-duration: 6s;
+        }
+
+        .c4 {
+            width: 120px;
+            height: 120px;
+            top: 80%;
+            left: 10%;
+            background: radial-gradient(circle, rgba(255, 223, 186, 0.4), transparent);
+            animation-duration: 9s;
+        }
+
+        .c5 {
+            width: 180px;
+            height: 180px;
+            top: 20%;
+            left: 80%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.4), transparent);
+            animation-duration: 11s;
+        }
 
         @keyframes float {
-            0% { transform: translate(0, 0); opacity: 0.4; }
-            100% { transform: translate(20px, -20px); opacity: 0.8; }
+            0% {
+                transform: translate(0, 0);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: translate(20px, -20px);
+                opacity: 0.8;
+            }
         }
 
         /* Result Content */
@@ -183,14 +236,15 @@
             height: 80px;
             margin-bottom: 20px;
             fill: #fff;
-            filter: drop-shadow(0 0 10px rgba(255,215,0,0.5));
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
         }
 
         .result-title {
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 1rem;
-            font-family: 'Georgia', serif; /* More classic/elegant feel */
+            font-family: 'Georgia', serif;
+            /* More classic/elegant feel */
         }
 
         .result-text {
@@ -201,21 +255,22 @@
         }
 
         .names-box {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             padding: 15px 25px;
             border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(5px);
         }
 
         .names-text {
             font-size: 1.1rem;
             font-style: italic;
-            color: #ffeeb3; /* Soft gold */
+            color: #ffeeb3;
+            /* Soft gold */
         }
-
     </style>
 </head>
+
 <body>
 
     <!-- Shutter Overlay -->
@@ -248,7 +303,8 @@
         <!-- Content -->
         <!-- Vintage Camera SVG -->
         <svg class="camera-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 6h-2.18c-.41-1.16-1.52-2-2.82-2h-6c-1.3 0-2.41.84-2.82 2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+            <path
+                d="M20 6h-2.18c-.41-1.16-1.52-2-2.82-2h-6c-1.3 0-2.41.84-2.82 2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
         </svg>
 
         <h2 class="result-title">Jullie gaan op de foto!</h2>
@@ -259,7 +315,7 @@
         </p>
 
         <div class="names-box">
-            <p class="names-text">Met: Christel (Mama), Tom & Fien, en Daan & Sara</p>
+            <p class="names-text">Met: Mama, Tom & Fien, en Daan & Sara</p>
         </div>
     </div>
 
@@ -342,4 +398,5 @@
         });
     </script>
 </body>
+
 </html>
