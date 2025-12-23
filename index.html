@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadeau Onthulling</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            --button-color: #e74c3c;
+            --button-border: #bdc3c7;
+            --shutter-color: #111;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background-color: var(--bg-color);
+        }
+
+        /* Container for all screens */
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* --- Landing Screen --- */
+        #landing-screen {
+            z-index: 10;
+            padding: 20px;
+            transition: opacity 0.5s ease;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .shutter-btn {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #ff7e70, #e74c3c);
+            border: 8px solid #dcdcdc;
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 4px #95a5a6, /* Outer metallic ring */
+                0 10px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .shutter-btn:active {
+            transform: scale(0.95);
+            box-shadow:
+                0 0 0 4px #95a5a6,
+                0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .shutter-btn span {
+            display: none; /* Text hidden visually inside button for design, can be tooltip or below */
+        }
+
+        .btn-label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        /* --- Shutter Animation --- */
+        .shutter-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shutter-blade {
+            background-color: var(--shutter-color);
+            width: 100%;
+            height: 50%;
+            transition: transform 0.3s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+
+        .shutter-top {
+            transform: translateY(-100%);
+        }
+
+        .shutter-bottom {
+            transform: translateY(100%);
+        }
+
+        /* Closed State */
+        .shutter-closed .shutter-top {
+            transform: translateY(0);
+        }
+        .shutter-closed .shutter-bottom {
+            transform: translateY(0);
+        }
+
+        /* --- Result Screen --- */
+        #result-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none; /* Hidden initially */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            z-index: 5;
+            overflow-y: auto; /* Allow scroll if content is long */
+        }
+
+        /* Bokeh Background */
+        .bokeh-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #2c3e50, #000);
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bokeh-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        /* Warm/Christmas colors */
+        .c1 { width: 150px; height: 150px; top: 10%; left: 20%; background: radial-gradient(circle, rgba(255,215,0,0.5), transparent); animation-duration: 8s; }
+        .c2 { width: 200px; height: 200px; top: 60%; left: 70%; background: radial-gradient(circle, rgba(255,0,0,0.3), transparent); animation-duration: 12s; }
+        .c3 { width: 100px; height: 100px; top: 40%; left: 40%; background: radial-gradient(circle, rgba(255,255,255,0.4), transparent); animation-duration: 6s; }
+        .c4 { width: 120px; height: 120px; top: 80%; left: 10%; background: radial-gradient(circle, rgba(255,223,186,0.4), transparent); animation-duration: 9s; }
+        .c5 { width: 180px; height: 180px; top: 20%; left: 80%; background: radial-gradient(circle, rgba(212,175,55,0.4), transparent); animation-duration: 11s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); opacity: 0.4; }
+            100% { transform: translate(20px, -20px); opacity: 0.8; }
+        }
+
+        /* Result Content */
+        .camera-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            fill: #fff;
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.5));
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-family: 'Georgia', serif; /* More classic/elegant feel */
+        }
+
+        .result-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .names-box {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .names-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #ffeeb3; /* Soft gold */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Shutter Overlay -->
+    <div class="shutter-overlay" id="shutter">
+        <div class="shutter-blade shutter-top"></div>
+        <div class="shutter-blade shutter-bottom"></div>
+    </div>
+
+    <!-- Step 1: Landing -->
+    <div class="container" id="landing-screen">
+        <h1>Proficiat, je hebt de puzzel succesvol voltooid!</h1>
+
+        <button class="shutter-btn" id="capture-btn" aria-label="Maak foto">
+            <!-- Inner reflection for detail -->
+        </button>
+        <span class="btn-label">Druk hier voor je cadeau</span>
+    </div>
+
+    <!-- Step 3: Result -->
+    <div id="result-screen">
+        <!-- Bokeh Background -->
+        <div class="bokeh-bg">
+            <div class="bokeh-circle c1"></div>
+            <div class="bokeh-circle c2"></div>
+            <div class="bokeh-circle c3"></div>
+            <div class="bokeh-circle c4"></div>
+            <div class="bokeh-circle c5"></div>
+        </div>
+
+        <!-- Content -->
+        <!-- Vintage Camera SVG -->
+        <svg class="camera-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 6h-2.18c-.41-1.16-1.52-2-2.82-2h-6c-1.3 0-2.41.84-2.82 2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+        </svg>
+
+        <h2 class="result-title">Jullie gaan op de foto!</h2>
+
+        <p class="result-text">
+            Dit cadeau is een complete familiefotoshoot. <br>
+            Laten we die glimlach vastleggen.
+        </p>
+
+        <div class="names-box">
+            <p class="names-text">Met: Christel (Mama), Tom & Fien, en Daan & Sara</p>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('capture-btn');
+        const shutter = document.getElementById('shutter');
+        const landingScreen = document.getElementById('landing-screen');
+        const resultScreen = document.getElementById('result-screen');
+
+        // Web Audio API Context
+        let audioCtx;
+
+        function playShutterSound() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Create noise buffer for the "mechanical" click sound
+            const bufferSize = audioCtx.sampleRate * 0.1; // 0.1 seconds
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            // Filter to make it sound more like a mechanism
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = 1000;
+
+            // Gain for envelope
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+
+            noise.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            noise.start();
+
+            // Add a second "clack" slightly after for realism (opening/closing)
+            setTimeout(() => {
+                const noise2 = audioCtx.createBufferSource();
+                noise2.buffer = buffer;
+                const gain2 = audioCtx.createGain();
+                gain2.gain.setValueAtTime(0.8, audioCtx.currentTime);
+                gain2.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+
+                noise2.connect(filter);
+                filter.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                noise2.start();
+            }, 100);
+        }
+
+        btn.addEventListener('click', () => {
+            // 1. Play Sound
+            playShutterSound();
+
+            // 2. Start Animation: Close Shutter
+            shutter.classList.add('shutter-closed');
+
+            // 3. Wait for shutter to close (300ms matches CSS transition)
+            setTimeout(() => {
+                // Hide Landing, Show Result
+                landingScreen.style.display = 'none';
+                resultScreen.style.display = 'flex'; // Use flex to center content
+
+                // Open Shutter
+                setTimeout(() => {
+                    shutter.classList.remove('shutter-closed');
+                }, 100); // Small delay to ensure DOM update
+
+            }, 400); // Slightly longer than transition to be safe
+        });
+    </script>
+</body>
+</html>
