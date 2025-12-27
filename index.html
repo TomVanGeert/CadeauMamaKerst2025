@@ -241,7 +241,7 @@
 
     <!-- Countdown Overlay -->
     <div id="countdown-overlay">
-        <div id="countdown-text">3</div>
+        <div id="countdown-text" aria-live="assertive" aria-atomic="true">3</div>
     </div>
 
     <!-- Landing Screen -->
@@ -256,7 +256,7 @@
     <!-- Result Screen -->
     <div id="result-screen">
         <div class="container">
-            <h1>Verrassing!</h1>
+            <h1 tabindex="-1">Verrassing!</h1>
             <img src="gift-reveal.png" alt="Cadeau Onthulling" class="gift-image">
             <p>We gaan op de foto!<br>Professionele fotoshoot 📸</p>
         </div>
@@ -271,6 +271,7 @@
         for (let i = 0; i < snowflakeCount; i++) {
             const el = document.createElement('div');
             el.classList.add('snowflake');
+            el.setAttribute('aria-hidden', 'true');
             el.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
             el.style.left = Math.random() * 100 + 'vw';
             el.style.animationDuration = (Math.random() * 5 + 5) + 's'; // 5-10s
@@ -374,6 +375,8 @@
                 // Show result (opacity transition)
                 setTimeout(() => {
                     resultScreen.style.opacity = '1';
+                    // Move focus to heading for accessibility
+                    resultScreen.querySelector('h1').focus();
                 }, 50);
 
                 // Open Shutter
