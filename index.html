@@ -60,6 +60,13 @@
             }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            .snowflake {
+                animation: none;
+                display: none;
+            }
+        }
+
         .container {
             text-align: center;
             position: relative;
@@ -136,6 +143,20 @@
             cursor: not-allowed;
             box-shadow: none;
             transform: none;
+        }
+
+        .capture-btn.secondary {
+            background-color: transparent;
+            border: 2px solid var(--text-color);
+            margin-top: 1.5rem;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            box-shadow: none;
+        }
+
+        .capture-btn.secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
         }
 
         /* Countdown Overlay */
@@ -259,6 +280,7 @@
             <h1 tabindex="-1">Verrassing!</h1>
             <img src="gift-reveal.png" alt="Cadeau Onthulling" class="gift-image">
             <p>We gaan op de foto!<br>Professionele fotoshoot 📸</p>
+            <button id="reset-btn" class="capture-btn secondary">Nog een keer 🔄</button>
         </div>
     </div>
 
@@ -282,6 +304,7 @@
 
         // Logic
         const btn = document.getElementById('capture-btn');
+        const resetBtn = document.getElementById('reset-btn');
         const landingScreen = document.getElementById('landing-screen');
         const resultScreen = document.getElementById('result-screen');
         const body = document.body;
@@ -384,6 +407,24 @@
 
             }, 300); // 100ms shutter close + a bit of hold
         }
+
+        resetBtn.addEventListener('click', () => {
+            // Reset logic
+            resultScreen.style.opacity = '0';
+            setTimeout(() => {
+                resultScreen.style.display = 'none';
+                landingScreen.style.display = 'flex';
+                // Small timeout to allow display:flex to apply before opacity transition
+                setTimeout(() => {
+                    landingScreen.style.opacity = '1';
+                }, 50);
+
+                // Re-enable start button
+                btn.disabled = false;
+                // Announce for screen readers
+                btn.focus();
+            }, 500);
+        });
     </script>
 </body>
 
