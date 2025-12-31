@@ -137,6 +137,11 @@
             transform: scale(0.95);
         }
 
+        .capture-btn:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--bg-color), 0 0 0 5px var(--accent-color), 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+
         .capture-btn:disabled {
             background-color: #555;
             border-color: #777;
@@ -247,6 +252,12 @@
 
         .shutter-closed .shutter.bottom {
             transform: translateY(0);
+        }
+
+        .reset-btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            margin-top: 2rem;
         }
     </style>
 </head>
