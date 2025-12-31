@@ -421,10 +421,15 @@
 
         resetBtn.addEventListener('click', () => {
             // Reset logic
+            resetBtn.disabled = true; // Prevent double clicks
             resultScreen.style.opacity = '0';
             setTimeout(() => {
                 resultScreen.style.display = 'none';
+
+                // Fade in landing screen
+                landingScreen.style.opacity = '0';
                 landingScreen.style.display = 'flex';
+
                 // Small timeout to allow display:flex to apply before opacity transition
                 setTimeout(() => {
                     landingScreen.style.opacity = '1';
@@ -432,6 +437,7 @@
 
                 // Re-enable start button
                 btn.disabled = false;
+                resetBtn.disabled = false;
                 // Announce for screen readers
                 btn.focus();
             }, 500);
