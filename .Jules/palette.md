@@ -1,3 +1,9 @@
-## 2024-05-22 - [Custom Focus Ring]
-**Learning:** Default browser focus rings (often blue or black) clash with dark, warm festive themes, making them either invisible or ugly.
-**Action:** Use `box-shadow` with `var(--accent-color)` and a `var(--bg-color)` gap (double ring effect) to create an accessible focus indicator that feels like part of the design system.
+# Palette's Journal
+
+## 2025-01-20 - Respecting Motion Preferences
+**Learning:** Infinite animations like falling snow can be distracting or nauseating for users with vestibular disorders.
+**Action:** Always wrap non-essential decorative animations in `@media (prefers-reduced-motion: no-preference)` or disable them in `(prefers-reduced-motion: reduce)`.
+
+## 2025-01-20 - avoiding Dead-Ends
+**Learning:** Single-page reveal apps often leave users at a "success" state with no way to reset, forcing a browser refresh.
+**Action:** Always provide a "Reset" or "Play Again" button to allow users to re-experience the flow without leaving the app context.

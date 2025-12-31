@@ -60,6 +60,13 @@
             }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            .snowflake {
+                animation: none;
+                display: none;
+            }
+        }
+
         .container {
             text-align: center;
             position: relative;
@@ -143,10 +150,18 @@
             transform: none;
         }
 
-        .capture-btn:focus-visible {
-            outline: 4px solid var(--accent-color);
-            outline-offset: 4px;
-            box-shadow: 0 0 25px var(--accent-color);
+        .capture-btn.secondary {
+            background-color: transparent;
+            border: 2px solid var(--text-color);
+            margin-top: 1.5rem;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            box-shadow: none;
+        }
+
+        .capture-btn.secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
         }
 
         /* Countdown Overlay */
@@ -276,7 +291,7 @@
             <h1 tabindex="-1">Verrassing!</h1>
             <img src="gift-reveal.png" alt="Cadeau Onthulling" class="gift-image">
             <p>We gaan op de foto!<br>Professionele fotoshoot 📸</p>
-            <button id="reset-btn" class="capture-btn reset-btn">Nog een keer 🔄</button>
+            <button id="reset-btn" class="capture-btn secondary">Nog een keer 🔄</button>
         </div>
     </div>
 
@@ -405,22 +420,21 @@
         }
 
         resetBtn.addEventListener('click', () => {
-            playShutterSound();
-            body.classList.add('shutter-closed');
-
+            // Reset logic
+            resultScreen.style.opacity = '0';
             setTimeout(() => {
-                // Reset states
-                resultScreen.style.opacity = '0';
                 resultScreen.style.display = 'none';
-
                 landingScreen.style.display = 'flex';
-                // Ensure landing screen is fully opaque (it might not be if we messed with it, but here it's default)
+                // Small timeout to allow display:flex to apply before opacity transition
+                setTimeout(() => {
+                    landingScreen.style.opacity = '1';
+                }, 50);
 
+                // Re-enable start button
                 btn.disabled = false;
-                btn.focus(); // Restore focus to start button
-
-                body.classList.remove('shutter-closed');
-            }, 300);
+                // Announce for screen readers
+                btn.focus();
+            }, 500);
         });
     </script>
 </body>
