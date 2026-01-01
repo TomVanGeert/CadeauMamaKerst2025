@@ -259,6 +259,18 @@
             font-size: 1.2rem;
             margin-top: 2rem;
         }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            #countdown-text,
+            .gift-image {
+                animation: none;
+            }
+
+            .shutter {
+                transition: none;
+            }
+        }
     </style>
 </head>
 
