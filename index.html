@@ -259,6 +259,32 @@
             font-size: 1.2rem;
             margin-top: 2rem;
         }
+
+        .cancel-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 101;
+        }
+
+        .cancel-btn:hover, .cancel-btn:focus-visible {
+            background: rgba(212, 175, 55, 0.2);
+            transform: scale(1.1);
+            outline: none;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
     </style>
 </head>
 
@@ -274,6 +300,7 @@
     <!-- Countdown Overlay -->
     <div id="countdown-overlay">
         <div id="countdown-text" aria-live="assertive" aria-atomic="true">3</div>
+        <button id="cancel-countdown-btn" class="cancel-btn" aria-label="Annuleren" title="Annuleren (Esc)">✕</button>
     </div>
 
     <!-- Landing Screen -->
@@ -321,6 +348,8 @@
         const body = document.body;
         const countdownOverlay = document.getElementById('countdown-overlay');
         const countdownText = document.getElementById('countdown-text');
+        const cancelCountdownBtn = document.getElementById('cancel-countdown-btn');
+        let countdownInterval;
 
         // Sound effect (simple beep using Web Audio API for countdown, then shutter)
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -382,17 +411,32 @@
             countdownText.textContent = count;
             playBeep(600, 0.1); // High beep
 
-            const interval = setInterval(() => {
+            countdownInterval = setInterval(() => {
                 count--;
                 if (count > 0) {
                     countdownText.textContent = count;
                     playBeep(600, 0.1);
                 } else {
-                    clearInterval(interval);
+                    clearInterval(countdownInterval);
                     finishCountdown();
                 }
             }, 1000);
         }
+
+        function cancelCountdown() {
+            clearInterval(countdownInterval);
+            countdownOverlay.style.display = 'none';
+            btn.disabled = false;
+            btn.focus();
+        }
+
+        cancelCountdownBtn.addEventListener('click', cancelCountdown);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && countdownOverlay.style.display === 'flex') {
+                cancelCountdown();
+            }
+        });
 
         function finishCountdown() {
             countdownOverlay.style.display = 'none';
