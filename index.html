@@ -259,6 +259,28 @@
             font-size: 1.2rem;
             margin-top: 2rem;
         }
+        @media (prefers-reduced-motion: reduce) {
+            /* Disable animations for motion sensitivity */
+            .snowflake,
+            #countdown-text,
+            .gift-image {
+                animation: none !important;
+            }
+
+            /* Disable transitions */
+            .shutter,
+            .capture-btn,
+            #landing-screen,
+            #result-screen {
+                transition: none !important;
+            }
+
+            /* Disable scaling */
+            .capture-btn:hover,
+            .capture-btn:active {
+                transform: none !important;
+            }
+        }
     </style>
 </head>
 
