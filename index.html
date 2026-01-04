@@ -321,6 +321,7 @@
         const body = document.body;
         const countdownOverlay = document.getElementById('countdown-overlay');
         const countdownText = document.getElementById('countdown-text');
+        let countdownInterval;
 
         // Sound effect (simple beep using Web Audio API for countdown, then shutter)
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -382,13 +383,13 @@
             countdownText.textContent = count;
             playBeep(600, 0.1); // High beep
 
-            const interval = setInterval(() => {
+            countdownInterval = setInterval(() => {
                 count--;
                 if (count > 0) {
                     countdownText.textContent = count;
                     playBeep(600, 0.1);
                 } else {
-                    clearInterval(interval);
+                    clearInterval(countdownInterval);
                     finishCountdown();
                 }
             }, 1000);
@@ -435,6 +436,23 @@
                 // Announce for screen readers
                 btn.focus();
             }, 500);
+        });
+
+        // Keyboard Shortcuts (Escape to cancel/reset)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Scenario 1: Cancel Countdown
+                if (countdownOverlay.style.display === 'flex') {
+                    clearInterval(countdownInterval);
+                    countdownOverlay.style.display = 'none';
+                    btn.disabled = false;
+                    btn.focus();
+                }
+                // Scenario 2: Reset from Result Screen
+                else if (resultScreen.style.display === 'flex' && resultScreen.style.opacity !== '0') {
+                    resetBtn.click();
+                }
+            }
         });
     </script>
 </body>
