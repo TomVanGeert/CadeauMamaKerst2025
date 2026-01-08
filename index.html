@@ -175,8 +175,23 @@
             /* Hidden by default */
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             background: rgba(0, 0, 0, 0.6);
             z-index: 100;
+        }
+
+        #skip-btn {
+            font-size: 1rem;
+            padding: 0.8rem 2rem;
+            margin-top: 2rem;
+            opacity: 0.8;
+            transition: opacity 0.3s, transform 0.2s;
+        }
+
+        #skip-btn:hover,
+        #skip-btn:focus-visible {
+            opacity: 1;
+            transform: scale(1.05);
         }
 
         #countdown-text {
@@ -286,6 +301,7 @@
     <!-- Countdown Overlay -->
     <div id="countdown-overlay">
         <div id="countdown-text" aria-live="assertive" aria-atomic="true">3</div>
+        <button id="skip-btn" class="capture-btn secondary" aria-label="Sla het aftellen over">Sla over ⏭️</button>
     </div>
 
     <!-- Landing Screen -->
@@ -328,11 +344,14 @@
         // Logic
         const btn = document.getElementById('capture-btn');
         const resetBtn = document.getElementById('reset-btn');
+        const skipBtn = document.getElementById('skip-btn');
         const landingScreen = document.getElementById('landing-screen');
         const resultScreen = document.getElementById('result-screen');
         const body = document.body;
         const countdownOverlay = document.getElementById('countdown-overlay');
         const countdownText = document.getElementById('countdown-text');
+
+        let countdownInterval;
 
         // Sound effect (simple beep using Web Audio API for countdown, then shutter)
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -389,18 +408,24 @@
             startCountdown(3);
         });
 
+        skipBtn.addEventListener('click', () => {
+            clearInterval(countdownInterval);
+            finishCountdown();
+        });
+
         function startCountdown(count) {
             countdownOverlay.style.display = 'flex';
             countdownText.textContent = count;
             playBeep(600, 0.1); // High beep
+            skipBtn.focus();
 
-            const interval = setInterval(() => {
+            countdownInterval = setInterval(() => {
                 count--;
                 if (count > 0) {
                     countdownText.textContent = count;
                     playBeep(600, 0.1);
                 } else {
-                    clearInterval(interval);
+                    clearInterval(countdownInterval);
                     finishCountdown();
                 }
             }, 1000);
